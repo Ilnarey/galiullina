@@ -9,9 +9,9 @@ const offers: FullOffer[] = [
         'type' : 'apartament',
         'price' : 370,
         'images' : [
-            '.././public/img/apartment-01.jpg',
-            '.././public/img/apartment-02.jpg',
-            '.././public/img/apartment-03.jpg',
+            '../../public/img/apartment-01.jpg',
+            '../../public/img/apartment-02.jpg',
+            '../../public/img/apartment-03.jpg',
         ],
         'city' : {
             'name' : 'Paris',
@@ -62,9 +62,9 @@ const offers: FullOffer[] = [
         'type': 'house',
         'price': 420,
         'images' : [
-            '.././public/img/apartment-01.jpg',
-            '.././public/img/apartment-02.jpg',
-            '.././public/img/apartment-03.jpg',
+            '../../public/img/apartment-01.jpg',
+            '../../public/img/apartment-02.jpg',
+            '../../public/img/apartment-03.jpg',
         ],
         'city': {
             'name': 'Barcelona',
@@ -113,9 +113,9 @@ const offers: FullOffer[] = [
         'type': 'room',
         'price': 280,
         'images' : [
-            '.././public/img/apartment-01.jpg',
-            '.././public/img/apartment-02.jpg',
-            '.././public/img/apartment-03.jpg',
+            '../../public/img/apartment-01.jpg',
+            '../../public/img/apartment-02.jpg',
+            '../../public/img/apartment-03.jpg',
  
         ],
         'city': {
