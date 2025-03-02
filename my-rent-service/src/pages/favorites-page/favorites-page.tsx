@@ -1,6 +1,7 @@
 import { JSX } from "react";
-import FavoritesLocations from "../../components/favorites-locations/favorites-locatios";
 import { Logo } from "../../components/logo/logo";
+import { FavoritesCardList } from "../../components/favorite-card-list/favorite-card-list";
+import { offersList } from "../../mocks/offers-list";
 
 function FavoritesPage(): JSX.Element {
     return(
@@ -38,9 +39,8 @@ function FavoritesPage(): JSX.Element {
               <h1 className="favorites__title">Saved listing</h1>
               <ul className="favorites__list">
                 
-            <FavoritesLocations/>
-            <FavoritesLocations/>
-
+                <FavoritesCardList offersList={offersList}/>
+                
               </ul>
             </section>
           </div>
