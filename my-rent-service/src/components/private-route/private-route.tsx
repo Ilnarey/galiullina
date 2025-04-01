@@ -1,8 +1,8 @@
 import { Navigate } from "react-router-dom";
 import { PropsWithChildren } from "react";
-import { AppRoute, AuthorizationStatus } from "../../const";
+import { AppRoute, AutorizationStatus } from "../../const";
 
-type AuthorizationStatusEnum = typeof AuthorizationStatus[keyof typeof AuthorizationStatus];
+type AuthorizationStatusEnum = typeof AutorizationStatus[keyof typeof AutorizationStatus];
 
 type PrivateRputeProps = {
     authorizationStatus:AuthorizationStatusEnum;
@@ -12,7 +12,7 @@ function PrivateRoute(props: PropsWithChildren<PrivateRputeProps>) {
     const {authorizationStatus, children } = props;
 
     return (
-        authorizationStatus === AuthorizationStatus.Auth
+        authorizationStatus === AutorizationStatus.Auth
         ? children
         : <Navigate to={AppRoute.Login}/>
     );

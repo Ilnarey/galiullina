@@ -1,28 +1,50 @@
-import { JSX } from "react";
-import NearPlaces from "../../components/near-places/near-places";
-import { Logo } from "../../components/logo/logo";
-import { FullOffer, } from "../../types/offer";
-import { useParams } from "react-router-dom";
+import { JSX,useState } from "react";
+import {Logo} from "../../components/logo/logo";
+import { FullOffer ,OffersList } from "../../types/offer";
+import {  useParams } from "react-router-dom";
 import ErrorPage from "../error-page/error-page";
-import { CommentSubmissionForm } from "../../components/comment-submission-form/comment-submission-form";
+import CommentSubmissionForm from "../../components/comment-submission-form/comment-submission-form";
+import {ReviewsList} from "../../components/reviews-list/reviews-list";
+import { Review } from "../../types/review";
+import Map from "../../components/map/map.tsx";
+import MapList from "../../components/mapList/mapList.tsx";
+import { CitiesCardList } from "../../components/cities-card-list/cities-card-list.tsx";
+
 
 type OfferProps = {
-  offers: FullOffer[];
+  offers : FullOffer[];   
+  reviewsList : Review[];
+  offersList: OffersList[]
+  reviewsOffersCount : number;
 };
 
-function OfferPage({offers}: OfferProps): JSX.Element {
+
+function OfferPage({offers,reviewsList,offersList, reviewsOffersCount}  : OfferProps): JSX.Element {
+  const [selectedPoint, setSelectedPoint] = useState<OffersList | null>(null);
   const params = useParams();
-  const offer = offers.find((item) => item.id === params.id)
-  if (!offer){
-    return <ErrorPage/>
-  }
+  const offer = offers.find((item) => item.id === params.id);
+
+  const cityOffers = offer
+    ? offersList.filter((item) => item.city.name === offer.city.name)
+    : [];
+
+  const handleListItemHover = (offerId: string) => {
+    const currentPoint = offersList.find((offer) => offer.title === offerId);
+
+    setSelectedPoint(currentPoint || null);
+  };
+    
+    if (!offer){
+      return <ErrorPage/>
+    }
     return(
+      
     <div className="page">
         <header className="header">
           <div className="container">
             <div className="header__wrapper">
               <div className="header__left">
-                <Logo/>
+              <Logo/>
               </div>
               <nav className="header__nav">
                 <ul className="header__nav-list">
@@ -49,21 +71,21 @@ function OfferPage({offers}: OfferProps): JSX.Element {
           <section className="offer">
             <div className="offer__gallery-container container">
               <div className="offer__gallery">
-                {offer.images.map((item) => (
-                   <div key={item} className="offer__image-wrapper">
-                  <img className="offer__image" src={item} alt="Photo studio"/>
-                </div>
+                {offer.images.map((item) =>(
+                  <div key={item} className="offer__image-wrapper">
+                      <img className="offer__image" src={item} alt="Photo studio"/>
+                  </div>
                 ))}
               </div>
             </div>
-
             <div className="offer__container container">
               <div className="offer__wrapper">
                 {offer.isPremium ? (
                   <div className="offer__mark">
                   <span>Premium</span>
-                </div>): null}
-
+                </div>) : null
+                }
+              
                 <div className="offer__name-wrapper">
                   <h1 className="offer__name">
                     Beautiful &amp; {offer.title}
@@ -77,10 +99,10 @@ function OfferPage({offers}: OfferProps): JSX.Element {
                 </div>
                 <div className="offer__rating rating">
                   <div className="offer__stars rating__stars">
-                    <span style={{width: "80%"}}></span>
-                    <span className="visually-hidden">Rating</span>
+                  <span style={{width:`${(offer.rating / 5) * 100}%` }}></span>
+                  <span className="visually-hidden">Rating</span>
                   </div>
-                  <span className="offer__rating-value rating__value">4.8</span>
+                  <span className="offer__rating-value rating__value">{offer.rating}</span>
                 </div>
                 <ul className="offer__features">
                   <li className="offer__feature offer__feature--entire">
@@ -102,7 +124,7 @@ function OfferPage({offers}: OfferProps): JSX.Element {
                   <ul className="offer__inside-list">
                     {offer.goods.map((item) =>(
                       <li key={item} className="offer__inside-item">
-                      {item}
+                        {item}
                       </li>
                     ))}
                   </ul>
@@ -120,7 +142,7 @@ function OfferPage({offers}: OfferProps): JSX.Element {
                     <span className="offer__user-status">
                       Pro
                     </span>) : null
-                    }
+                    } 
                   </div>
                   <div className="offer__description">
                     <p className="offer__text">
@@ -132,44 +154,27 @@ function OfferPage({offers}: OfferProps): JSX.Element {
                   </div>
                 </div>
                 <section className="offer__reviews reviews">
-                  <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
-                  <ul className="reviews__list">
-                    <li className="reviews__item">
-                      <div className="reviews__user user">
-                        <div className="reviews__avatar-wrapper user__avatar-wrapper">
-                          <img className="reviews__avatar user__avatar" src="img/avatar-max.jpg" width="54" height="54" alt="Reviews avatar"/>
-                        </div>
-                        <span className="reviews__user-name">
-                          Max
-                        </span>
-                      </div>
-                      <div className="reviews__info">
-                        <div className="reviews__rating rating">
-                          <div className="reviews__stars rating__stars">
-                            <span style={{width:"80%"}}></span>
-                            <span className="visually-hidden">Rating</span>
-                          </div>
-                        </div>
-                        <p className="reviews__text">
-                          A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.
-                        </p>
-                        <time className="reviews__time" dateTime='2019-04-24'>April 2019</time>
-                      </div>
-                    </li>
-                  </ul>
-                 <CommentSubmissionForm/>
+                  <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviewsOffersCount}</span></h2>
+                    <ReviewsList reviewsList={reviewsList}/>
+                  <CommentSubmissionForm/>
+
                 </section>
               </div>
             </div>
-            <section className="offer__map map"></section>
+            <section className="offer__map">
+            <h1>Аппартоменты города {offer.city.name}:</h1>
+                <MapList points={cityOffers} onListItemHover={handleListItemHover}/>
+                <Map city={offer.city}
+                points={cityOffers}
+                  selectedPoint={selectedPoint}
+                  />
+            </section>
           </section>
           <div className="container">
             <section className="near-places places">
               <h2 className="near-places__title">Other places in the neighbourhood</h2>
               <div className="near-places__list places__list">
-              <NearPlaces/>
-              <NearPlaces/>
-              <NearPlaces/>
+              <CitiesCardList offersList={ cityOffers }/>
               </div>
             </section>
           </div>

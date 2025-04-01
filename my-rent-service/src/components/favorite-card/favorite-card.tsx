@@ -10,10 +10,10 @@ type FavoritesCardProps = {
   isPremium: boolean;
   previewImage: string;
   rating: number;  
+  isFavorite: boolean;
+  city:string;
+  
 }
-
-
-
 
 function FavoritesCard({ id, title, type, price, previewImage, isPremium, rating}: FavoritesCardProps): JSX.Element {
   const [, setOfferId] = useState('')

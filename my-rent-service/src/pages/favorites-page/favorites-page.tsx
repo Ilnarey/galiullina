@@ -1,9 +1,13 @@
 import { JSX } from "react";
 import { Logo } from "../../components/logo/logo";
-import { FavoritesCardList } from "../../components/favorite-card-list/favorite-card-list";
-import { offersList } from "../../mocks/offers-list";
+import  FavoritesCardList  from "../../components/favorite-card-list/favorite-card-list";
+import { OffersList } from "../../types/offer";
 
-function FavoritesPage(): JSX.Element {
+type FavoritesPageProps = {
+  offersList: OffersList[]
+}
+
+function FavoritesPage({offersList}: FavoritesPageProps): JSX.Element {
     return(
         <div className="page">
         <header className="header">
@@ -38,9 +42,9 @@ function FavoritesPage(): JSX.Element {
             <section className="favorites">
               <h1 className="favorites__title">Saved listing</h1>
               <ul className="favorites__list">
-                
-                <FavoritesCardList offersList={offersList}/>
-                
+                {offersList.map((item) => (
+                <FavoritesCardList key= {item.city.name} city = {item.city.name} offersList={offersList}/>
+                ))}
               </ul>
             </section>
           </div>
