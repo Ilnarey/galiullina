@@ -85,7 +85,7 @@ function MainPage(): JSX.Element {
             </section>
             <div className="cities__right-section-map">
               <section className="cities__map">
-                <h1>Аппартоменты города {selectedCity?.name}:</h1>
+                <h1>Аппартаменты города {selectedCity?.name}:</h1>
                 <MapList points={selectedcityOffers}  onListItemHover={handleListItemHover}/>
                 <Map city={selectedCity}
                 points={selectedcityOffers}
