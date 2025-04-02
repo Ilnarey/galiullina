@@ -32,9 +32,9 @@ function SortOptions({activeSorting,onChange} : SortPalcesProps){
     }
     return(
         <form className="places__sorting" action="#" method="get" onKeyDown={keyDownHandler}>
-                <span className="places__sorting-caption">Sort by</span>
+                <span className="places__sorting-caption">Sort by </span>
                 <span className="places__sorting-type" tabIndex={0} onClick={typeClickHandler}>
-                  Popular
+                { activeSorting }
                   <svg className="places__sorting-arrow" width="7" height="4" style={iconStyle}>
                     <use href="#icon-arrow-select"></use>
                   </svg>
